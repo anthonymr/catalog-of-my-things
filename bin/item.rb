@@ -32,4 +32,14 @@ class Item
     @label = label
     label.add_item(self)
   end
+
+  def can_be_archived?
+    @publish_date < 10.year.ago
+  end
+
+  def move_to_archive
+    @archived = true if can_be_archived?
+  end
+
+  private :can_be_archived?
 end
