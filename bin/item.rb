@@ -1,8 +1,8 @@
 class Item
   attr_accessor :published_date
 
-  def initialize(_published_date)
-    @publish_date = publised_date
+  def initialize(publish_date)
+    @publish_date = publish_date
 
     @id = rand(1000)
     @archived = false
