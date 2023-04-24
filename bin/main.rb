@@ -1,6 +1,8 @@
-require './user_interface'
+require_relative 'user_interface'
 
 def main
     ui = UserInterface.new
-    ui.options
+    ui.start
 end
+
+main
