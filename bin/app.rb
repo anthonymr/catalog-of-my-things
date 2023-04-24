@@ -12,7 +12,7 @@ class App
   end
 
   def list_books
-    @books.each { |book| puts book.to_s }
+    @books.each { |book| puts book }
   end
 
   def list_labels
