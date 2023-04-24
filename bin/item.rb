@@ -1,9 +1,11 @@
+require 'time'
+
 class Item
   attr_accessor :published_date
   attr_writer :label
 
   def initialize(publish_date)
-    @publish_date = publish_date
+    @publish_date = Time.parse(publish_date)
 
     @id = rand(1000)
     @archived = false
@@ -34,13 +36,21 @@ class Item
     label.add_item(self)
   end
 
-  def can_be_archived?
-    @publish_date < 10.year.ago
-  end
-
   def move_to_archive
     @archived = true if can_be_archived?
   end
 
-  private :can_be_archived?
+  private
+
+  def can_be_archived?
+    @publish_date < n_years_ago(10)
+  end
+
+  def n_years_ago(years)
+    year = Time.now.year - years
+    month = Time.now.month
+    day = Time.now.day
+
+    Time.new(year, month, day)
+  end
 end
