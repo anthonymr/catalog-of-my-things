@@ -9,5 +9,7 @@ class Game < Item
     @last_played_at = last_played_at
   end
 
-  can_be_archived?
+  def can_be_archived?
+    super && @last_played_at < n_years_ago(2)
+  end
 end
