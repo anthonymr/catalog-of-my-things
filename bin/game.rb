@@ -13,4 +13,3 @@ class Game < Item
     super && @last_played_at < n_years_ago(2)
   end
 end
-
