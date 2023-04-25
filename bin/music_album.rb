@@ -9,8 +9,9 @@ class MusicAlbum < Item
     @publised_date = publised_date
     @on_spotify = on_spotify
   end
-
+  
+  private
   def can_be_archived?
-    @publish_date < 10.year.ago && @on_spotify
+    super && @on_spotify
   end
 end
