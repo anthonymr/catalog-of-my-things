@@ -1,7 +1,8 @@
 require 'time'
 
 class Item
-  attr_accessor :publish_date, :author
+  attr_accessor :publish_date, :author, :genre
+
   attr_writer :label
 
   def initialize(publish_date)
