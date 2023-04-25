@@ -46,6 +46,8 @@ class App
 
   def list_author
     @authors.map(&:first_name).join(', ')
+  end
+
   def list_genres
     @genre.map(&:name).join(', ')
   end
