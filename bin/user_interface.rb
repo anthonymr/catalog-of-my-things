@@ -12,7 +12,7 @@ class UserInterface
 
   def start
     LocalStorage.load_data(@app)
-    
+
     until exit_option?
       print_menu
       ask_option
