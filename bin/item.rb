@@ -5,10 +5,10 @@ class Item
 
   attr_writer :label
 
-  def initialize(publish_date)
+  def initialize(publish_date, id = nil)
     @publish_date = Time.parse(publish_date)
 
-    @id = rand(1000)
+    @id = id || rand(1000)
     @archived = false
     @genre = nil
     @author = nil

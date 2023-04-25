@@ -4,6 +4,8 @@ require_relative 'game'
 require_relative 'author'
 
 class App
+  attr_accessor :music_albums, :books, :games, :labels, :authors, :genres
+
   def initialize
     @music_albums = []
     @games = []
