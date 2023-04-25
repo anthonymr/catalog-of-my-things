@@ -12,4 +12,8 @@ class MusicAlbum < Item
   def can_be_archived?
     super && @on_spotify
   end
+
+  def to_s
+    "(#{@id}) on spotify: #{@on_spotify} - publish date: #{@publish_date.to_date}"
+  end
 end
