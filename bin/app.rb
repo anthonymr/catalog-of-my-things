@@ -32,8 +32,7 @@ class App
     @games.each { |game| puts game }
   end
 
-  def list_author    
-    @authors.each (&:first_name).join(', ')
+  def list_author
+    @authors.map(&:first_name).join(', ')
   end
-
 end
