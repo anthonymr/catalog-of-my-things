@@ -1,9 +1,12 @@
 require_relative 'music_album'
+require_relative 'book'
 
 class App
   def initialize
     @music_albums = []
     @genres = []
+    @books = []
+    @labels = []
   end
 
   def add_music_album(on_spotify, publish_date)
@@ -13,6 +16,19 @@ class App
 
   def list_music_albums
     @music_albums.each { |music_album| puts music_album }
+  end
+  
+  def add_book(publisher, cover_state, publish_date)
+    book = Book.new(publisher, cover_state, publish_date)
+    @books << book
+  end
+
+  def list_books
+    @books.each { |book| puts book }
+  end
+  
+  def list_labels
+    @labels.map(&:title).join(', ')
   end
 
   def list_genres

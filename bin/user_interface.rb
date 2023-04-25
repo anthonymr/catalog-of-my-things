@@ -1,6 +1,9 @@
+require_relative 'app'
+
 class UserInterface
   def initialize
     @selected_option = 0
+    @app = App.new
   end
 
   def start
@@ -61,7 +64,7 @@ class UserInterface
   def list_items
     case @selected_option
     when 1
-      puts 'option 1'
+      @app.list_books
     when 2
       puts 'option 2'
     when 3
@@ -76,7 +79,7 @@ class UserInterface
     when 5
       puts 'option 5'
     when 6
-      puts 'option 6'
+      @app.list_labels
     when 7
       puts 'option 7'
     when 8
@@ -87,7 +90,13 @@ class UserInterface
   def add_item
     case @selected_option
     when 9
-      puts 'option 9'
+      puts 'Please enter the publisher'
+      publisher = gets.chomp
+      puts 'Please enter the cover state'
+      cover_state = gets.chomp
+      puts 'Please enter the publish date'
+      publish_date = gets.chomp
+      @app.add_book(publisher, cover_state, publish_date)
     when 10
       puts 'option 10'
     when 11
