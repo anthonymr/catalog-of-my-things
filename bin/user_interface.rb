@@ -1,12 +1,18 @@
 require_relative 'app'
+require_relative 'local_storage'
 
 class UserInterface
   def initialize
     @selected_option = 0
     @app = App.new
+
+    LocalStorage.books_file = 'data/books.json'
+    LocalStorage.labels_file = 'data/labels.json'
   end
 
   def start
+    LocalStorage.load_data(@app)
+    
     until exit_option?
       print_menu
       ask_option
@@ -68,6 +74,7 @@ class UserInterface
       add_item
       puts "\nItem added successfully"
     when 13
+      LocalStorage.save_data(@app)
       puts 'Bye!'
     end
   end
