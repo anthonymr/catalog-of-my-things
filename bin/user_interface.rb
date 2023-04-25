@@ -11,31 +11,39 @@ class UserInterface
       print_menu
       ask_option
       evaluate_option
+      continue
     end
   end
 
   private
 
+  def continue
+    puts 'Press enter to continue'
+    gets.chomp
+  end
+
   def print_menu
-    puts 'Please choose an options'
-    puts '1 - List all books'
-    puts '2 - List all music albums'
-    puts '3 - List all movie'
-    puts '4 - List all games'
-    puts '5 - List all genres (e.g "Comedy", "Thriller")'
-    puts '6 - List all labels (e.g. "Gift", "New")'
-    puts '7 - List all authors (e.g. "Stephen King")'
-    puts '8 - List all sources (e.g. "From a friend", "Online shop")'
-    puts '9 - Add a book'
+    system('cls') || system('clear')
+    puts "Catalog of my things\n\n"
+    puts '1  - List all books'
+    puts '2  - List all music albums'
+    puts '3  - List all movie'
+    puts '4  - List all games'
+    puts '5  - List all genres (e.g "Comedy", "Thriller")'
+    puts '6  - List all labels (e.g. "Gift", "New")'
+    puts '7  - List all authors (e.g. "Stephen King")'
+    puts '8  - List all sources (e.g. "From a friend", "Online shop")'
+    puts '9  - Add a book'
     puts '10 - Add a music album'
     puts '11 - Add a movie'
     puts '12 - Add a game'
-    puts '13- EXIT'
+    puts '13 - EXIT'
   end
 
   def ask_option
-    puts 'Please select an option'
+    puts "\nPlease select an option"
     @selected_option = gets.chomp.to_i
+    system('cls') || system('clear')
     return if valid_option?
 
     puts 'Invalid option, try again'
@@ -58,6 +66,9 @@ class UserInterface
       list_atributes
     when 9..12
       add_item
+      puts "\nItem added successfully"
+    when 13
+      puts 'Bye!'
     end
   end
 
@@ -66,43 +77,65 @@ class UserInterface
     when 1
       @app.list_books
     when 2
-      puts 'option 2'
+      @app.list_music_albums
     when 3
-      puts 'option 3'
+      puts 'Come back soon'
     when 4
-      puts 'option 4'
+      @app.list_games
     end
   end
 
   def list_atributes
     case @selected_option
     when 5
-      puts 'option 5'
+      puts @app.list_genres
     when 6
-      @app.list_labels
+      puts @app.list_labels
     when 7
-      puts 'option 7'
+      puts @app.list_author
     when 8
-      puts 'option 8'
+      puts 'Come back soon'
     end
   end
 
   def add_item
     case @selected_option
     when 9
-      puts 'Please enter the publisher'
-      publisher = gets.chomp
-      puts 'Please enter the cover state'
-      cover_state = gets.chomp
-      puts 'Please enter the publish date'
-      publish_date = gets.chomp
-      @app.add_book(publisher, cover_state, publish_date)
+      add_book
     when 10
-      puts 'option 10'
+      add_music_album
     when 11
-      puts 'option 11'
+      puts 'Come back soon.'
     when 12
-      puts 'option 12'
+      add_game
     end
+  end
+
+  def add_book
+    puts 'Please enter the publisher'
+    publisher = gets.chomp
+    puts 'Please enter the cover state'
+    cover_state = gets.chomp
+    puts 'Please enter the publish date'
+    publish_date = gets.chomp
+    @app.add_book(publisher, cover_state, publish_date)
+  end
+
+  def add_music_album
+    puts 'Is the music album on spotify? (y/n)'
+    on_spotify = gets.chomp == 'y'
+    puts 'Please enter the publish date'
+    publish_date = gets.chomp
+    @app.add_music_album(on_spotify, publish_date)
+  end
+
+  def add_game
+    puts 'Is the game multiplayer? (y/n)'
+    multiplayer = gets.chomp == 'y'
+    puts 'Please enter the last played date'
+    last_played_at = gets.chomp
+    puts 'Please enter the publish date'
+    publish_date = gets.chomp
+    @app.add_game(publish_date, multiplayer, last_played_at)
   end
 end
