@@ -1,11 +1,9 @@
 require_relative 'item'
 class MusicAlbum < Item
-  attr_accessor :on_spotify, :name
-  attr_reader :publish_date
+  attr_accessor :on_spotify
 
-  def initialize(name, on_spotify,publish_date)
+  def initialize(on_spotify, publish_date)
     super(publish_date)
-    @name = name
     @publish_date = publish_date
     @on_spotify = on_spotify
   end
@@ -15,6 +13,6 @@ class MusicAlbum < Item
   end
 
   def to_s
-    "(#{@id}) name: #{@name} - on spotify: #{@on_spotify} - publish date: #{@publish_date.to_date}"
+    "(#{@id}) on spotify: #{@on_spotify} - publish date: #{@publish_date.to_date}"
   end
 end
