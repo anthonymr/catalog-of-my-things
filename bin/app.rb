@@ -17,7 +17,7 @@ class App
   def list_music_albums
     @music_albums.each { |music_album| puts music_album }
   end
-  
+
   def add_book(publisher, cover_state, publish_date)
     book = Book.new(publisher, cover_state, publish_date)
     @books << book
@@ -26,7 +26,7 @@ class App
   def list_books
     @books.each { |book| puts book }
   end
-  
+
   def list_labels
     @labels.map(&:title).join(', ')
   end
