@@ -7,6 +7,7 @@ class LocalStorage
     def save_data(app)
       save_to_file(books_file, array_to_hash(app.books))
       save_to_file(labels_file, array_to_hash(app.labels))
+      save_to_file(games_file, array_to_hash(app.games))
     end
 
     def load_data(app)
@@ -20,20 +21,25 @@ class LocalStorage
       end
     end
 
-    def save_to_file(filename, data)
-      File.write(filename, JSON.generate(data))
+    load_from_file(games_file).map do |game|
+      new_game = Game.from_hash(game)
+      app.games << new_game
     end
+  end
 
-    def load_from_file(filename)
-      return [] if !File.exist?(filename) || File.empty?(filename)
+  def save_to_file(filename, data)
+    File.write(filename, JSON.generate(data))
+  end
 
-      JSON.parse(File.read(filename))
-    rescue JSON::ParserError
-      []
-    end
+  def load_from_file(filename)
+    return [] if !File.exist?(filename) || File.empty?(filename)
 
-    def array_to_hash(array)
-      array.map(&:to_hash)
-    end
+    JSON.parse(File.read(filename))
+  rescue JSON::ParserError
+    []
+  end
+
+  def array_to_hash(array)
+    array.map(&:to_hash)
   end
 end
