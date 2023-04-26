@@ -8,6 +8,7 @@ class LocalStorage
       save_to_file(books_file, array_to_hash(app.books))
       save_to_file(labels_file, array_to_hash(app.labels))
       save_to_file(games_file, array_to_hash(app.games))
+      save_to_file(authors_file, array_to_hash(app.authors))
     end
 
     def load_data(app)
@@ -23,6 +24,11 @@ class LocalStorage
       load_from_file(games_file).map do |game|
         new_game = Game.from_hash(game)
         app.games << new_game
+      end
+
+      load_from_file(authors_file).map do |author|
+        new_author = Author.from_hash(author)
+        app.authors << new_author
       end
     end
 
