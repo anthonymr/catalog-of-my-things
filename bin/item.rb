@@ -1,9 +1,7 @@
 require 'time'
 
 class Item
-  attr_accessor :publish_date, :author, :genre
-
-  attr_writer :label
+  attr_accessor :publish_date, :author, :genre, :label
 
   def initialize(publish_date, id = nil)
     @publish_date = Time.parse(publish_date)

@@ -69,10 +69,8 @@ class App
 
   def remove_book(id)
     @books.reject! do |book|
-      return true unless book.compare_to?(id)
-
-      @label&.remove_item(book)
-      false
+      book.label&.remove_item(book) if book.compare_to?(id)
+      book.compare_to?(id)
     end
   end
 end

@@ -168,6 +168,7 @@ class UserInterface
   end
 
   def remove_book
+    @app.list_books
     puts 'Please enter the book id'
     id = gets.chomp.to_i
     @app.remove_book(id)
