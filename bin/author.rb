@@ -6,7 +6,8 @@ class Author
   end
 
   def initialize(first_name, last_name, id = nil)
-    @id = Random.rand(1...1000)
+    super(id)
+    @id = id || Random.rand(1...1000)
     @first_name = first_name
     @last_name = last_name
     @items = []

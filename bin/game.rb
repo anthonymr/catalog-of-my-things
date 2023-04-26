@@ -15,7 +15,9 @@ class Game < Item
   end
 
   def to_s
-    "Game: (#{@id}) publish date: #{@publish_date.to_date} - multiplayer: #{@multiplayer} - last payed at: #{@last_played_at.to_date}"
+    game = "Game: (#{@id}) - multiplayer: #{@multiplayer}"
+    date = "publish date: #{@publish_date.to_date} - last payed at: #{@last_played_at.to_date}"
+    [game, date].join(' - ')
   end
 
   def to_hash

@@ -23,12 +23,9 @@ class LocalStorage
 
       load_from_file(games_file).map do |game|
         new_game = Game.from_hash(game)
+        new_author = app.authors.find{ |author| author.compare_to?(game['game_id']) }
+        new_game.add_author(new_author) if new_author
         app.games << new_game
-      end
-
-      load_from_file(authors_file).map do |author|
-        new_author = Author.from_hash(author)
-        app.authors << new_author
       end
     end
 
