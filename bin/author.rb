@@ -1,5 +1,6 @@
 class Author
   attr_accessor :first_name, :last_name
+
   def self.from_hash(data)
     new(data['first_name'], data['last_name'], data['id'])
   end
