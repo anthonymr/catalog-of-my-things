@@ -8,6 +8,7 @@ class UserInterface
 
     LocalStorage.books_file = 'data/books.json'
     LocalStorage.labels_file = 'data/labels.json'
+    LocalStorage.labels_file = 'data/games.json'
   end
 
   def start
