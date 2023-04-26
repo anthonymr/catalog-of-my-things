@@ -29,4 +29,8 @@ class Label
   def compare_to?(id)
     @id == id
   end
+
+  def delete_item(item)
+    @items.delete(item)
+  end
 end

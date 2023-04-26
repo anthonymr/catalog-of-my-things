@@ -66,4 +66,13 @@ class App
 
     @genres.map(&:name).join(', ')
   end
+
+  def remove_book(id)
+    @books.reject! do |book|
+      return true unless book.compare_to?(id)
+
+      @label&.remove_item(book)
+      false
+    end
+  end
 end

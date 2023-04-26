@@ -40,6 +40,10 @@ class Item
     @archived = true if can_be_archived?
   end
 
+  def compare_to?(id)
+    @id == id
+  end
+
   private
 
   def can_be_archived?

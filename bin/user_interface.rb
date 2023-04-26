@@ -47,7 +47,11 @@ class UserInterface
     puts '10 - Add a music album'
     puts '11 - Add a movie'
     puts '12 - Add a game'
-    puts '13 - EXIT'
+    puts '13 - Remove a book'
+    puts '14 - Remove a music album'
+    puts '15 - Remove a movie'
+    puts '16 - Remove a game'
+    puts '18 - EXIT'
   end
 
   def ask_option
@@ -61,11 +65,11 @@ class UserInterface
   end
 
   def exit_option?
-    @selected_option == 13
+    @selected_option == 18
   end
 
   def valid_option?
-    @selected_option.positive? && @selected_option <= 13
+    @selected_option.positive? && @selected_option <= 18
   end
 
   def evaluate_option
@@ -77,7 +81,9 @@ class UserInterface
     when 9..12
       add_item
       puts "\nItem added successfully"
-    when 13
+    when 13..17
+      remove_item
+    when 18
       LocalStorage.save_data(@app)
       puts 'Bye!'
     end
@@ -122,6 +128,17 @@ class UserInterface
     end
   end
 
+  def remove_item
+    case @selected_option
+    when 13
+      remove_book
+    when 14
+      puts 'Come back soon.'
+    when 15
+      puts 'Come back soon.'
+    end
+  end
+
   def add_book
     puts 'Please enter the publisher'
     publisher = gets.chomp
@@ -148,5 +165,12 @@ class UserInterface
     puts 'Please enter the publish date'
     publish_date = gets.chomp
     @app.add_game(publish_date, multiplayer, last_played_at)
+  end
+
+  def remove_book
+    puts 'Please enter the book id'
+    id = gets.chomp.to_i
+    @app.remove_book(id)
+    puts 'Book removed successfully'
   end
 end
