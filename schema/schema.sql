@@ -13,7 +13,6 @@ CREATE TABLE IF NOT EXISTS games (
 	last_played     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	author_id       INT
 
-
   CONSTRAINT fk_genre
     FOREIGN KEY(genre_id)
 	  REFERENCES genres(id),
