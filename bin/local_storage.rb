@@ -19,27 +19,27 @@ class LocalStorage
         new_book.add_label(new_label) if new_label
         app.books << new_book
       end
+
+      load_from_file(games_file).map do |game|
+        new_game = Game.from_hash(game)
+        app.games << new_game
+      end
     end
 
-    load_from_file(games_file).map do |game|
-      new_game = Game.from_hash(game)
-      app.games << new_game
+    def save_to_file(filename, data)
+      File.write(filename, JSON.generate(data))
     end
-  end
 
-  def save_to_file(filename, data)
-    File.write(filename, JSON.generate(data))
-  end
+    def load_from_file(filename)
+      return [] if !File.exist?(filename) || File.empty?(filename)
 
-  def load_from_file(filename)
-    return [] if !File.exist?(filename) || File.empty?(filename)
+      JSON.parse(File.read(filename))
+    rescue JSON::ParserError
+      []
+    end
 
-    JSON.parse(File.read(filename))
-  rescue JSON::ParserError
-    []
-  end
-
-  def array_to_hash(array)
-    array.map(&:to_hash)
+    def array_to_hash(array)
+      array.map(&:to_hash)
+    end
   end
 end
