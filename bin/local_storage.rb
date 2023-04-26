@@ -13,6 +13,7 @@ class LocalStorage
 
     def load_data(app)
       app.labels = load_from_file(labels_file).map { |label| Label.from_hash(label) }
+      app.authors = load_from_file(authors_file).map { |author| Author.from_hash(author) }
 
       load_from_file(books_file).map do |book|
         new_book = Book.from_hash(book)
@@ -23,7 +24,7 @@ class LocalStorage
 
       load_from_file(games_file).map do |game|
         new_game = Game.from_hash(game)
-        new_author = app.authors.find{ |author| author.compare_to?(game['game_id']) }
+        new_author = app.authors.find { |author| author.compare_to?(game['author_id']) }
         new_game.add_author(new_author) if new_author
         app.games << new_game
       end
