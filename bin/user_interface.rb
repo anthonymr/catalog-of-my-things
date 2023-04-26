@@ -6,8 +6,12 @@ class UserInterface
     @selected_option = 0
     @app = App.new
 
-    LocalStorage.books_file = 'data/books.json'
-    LocalStorage.labels_file = 'data/labels.json'
+    root_dir = __dir__
+
+    LocalStorage.books_file = File.join(root_dir, 'data', 'books.json')
+    LocalStorage.labels_file = File.join(root_dir, 'data', 'labels.json')
+    LocalStorage.music_albums_file = File.join(root_dir, 'data', 'music_albums.json')
+    LocalStorage.genres_file = File.join(root_dir, 'data', 'genres.json')
   end
 
   def start
