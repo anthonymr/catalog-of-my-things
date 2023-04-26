@@ -1,8 +1,12 @@
 class Genre
   attr_accessor :name
 
-  def initialize(name)
-    @id = Random.rand(1..1000)
+  def self.from_hash(data)
+    new(data['name'], data['id'])
+  end
+
+  def initialize(name, id = nil)
+    @id = id || rand(1000)
     @name = name
     @items = []
   end
@@ -10,5 +14,16 @@ class Genre
   def add_item(item)
     @items << item unless @items.include?(item)
     item.genre = self
+  end
+
+  def to_hash
+    {
+      id: @id,
+      name: @name
+    }
+  end
+
+  def compare_to?(id)
+    @id == id
   end
 end
