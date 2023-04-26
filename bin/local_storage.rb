@@ -9,10 +9,14 @@ class LocalStorage
       save_to_file(labels_file, array_to_hash(app.labels))
       save_to_file(games_file, array_to_hash(app.games))
       save_to_file(authors_file, array_to_hash(app.authors))
+      save_to_file(music_albums_file, array_to_hash(app.music_albums))
+      save_to_file(genres_file, array_to_hash(app.genres))
+
     end
 
     def load_data(app)
       app.labels = load_from_file(labels_file).map { |label| Label.from_hash(label) }
+      app.genres = load_from_file(genres_file).map { |genre| Genre.from_hash(genre) }
 
       load_from_file(books_file).map do |book|
         new_book = Book.from_hash(book)
@@ -26,6 +30,13 @@ class LocalStorage
         new_author = app.authors.find{ |author| author.compare_to?(game['game_id']) }
         new_game.add_author(new_author) if new_author
         app.games << new_game
+
+      load_from_file(music_albums_file).map do |album|
+        new_album = MusicAlbum.from_hash(album)
+        new_genres = app.genres.find { |genre| genre.compare_to?(album['genre_id']) }
+        new_album.add_genre(new_genres) if new_genres
+        app.music_albums << new_album
+
       end
     end
 
@@ -34,7 +45,7 @@ class LocalStorage
     end
 
     def load_from_file(filename)
-      return [] if !File.exist?(filename) || File.empty?(filename)
+      return [] if filename.nil? || filename.empty? || !File.exist?(filename)
 
       JSON.parse(File.read(filename))
     rescue JSON::ParserError
