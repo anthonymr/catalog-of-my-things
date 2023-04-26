@@ -2,6 +2,7 @@ require_relative 'music_album'
 require_relative 'book'
 require_relative 'game'
 require_relative 'author'
+require_relative 'label'
 
 class App
   attr_accessor :music_albums, :books, :games, :labels, :authors, :genres
@@ -72,5 +73,14 @@ class App
       book.label&.remove_item(book) if book.compare_to?(id)
       book.compare_to?(id)
     end
+  end
+
+  def add_book_label(book_id, label_id)
+    selceted_label = @labels.find { |label| label.compare_to?(label_id) }
+    @books.find { |book| book.compare_to?(book_id) }&.add_label(selceted_label)
+  end
+
+  def create_label(title, color)
+    @labels << Label.new(title, color)
   end
 end

@@ -33,4 +33,8 @@ class Label
   def delete_item(item)
     @items.delete(item)
   end
+
+  def id_to_s
+    @id.to_s
+  end
 end

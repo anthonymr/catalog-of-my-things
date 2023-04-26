@@ -28,7 +28,7 @@ class Book < Item
       publish_date: @publish_date,
       publisher: @publisher,
       cover_state: @cover_state,
-      label_id: @label&.id
+      label_id: @label&.id_to_s
     }
   end
 

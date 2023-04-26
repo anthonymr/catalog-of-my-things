@@ -1,177 +1,153 @@
 require_relative 'app'
 require_relative 'local_storage'
+require_relative 'menu'
 
 class UserInterface
   def initialize
     @selected_option = 0
     @app = App.new
 
-    root_dir = __dir__
-
-    LocalStorage.books_file = File.join(root_dir, 'data', 'books.json')
-    LocalStorage.labels_file = File.join(root_dir, 'data', 'labels.json')
-    LocalStorage.music_albums_file = File.join(root_dir, 'data', 'music_albums.json')
-    LocalStorage.genres_file = File.join(root_dir, 'data', 'genres.json')
+    LocalStorage.books_file = File.join(__dir__, 'data', 'books.json')
+    LocalStorage.labels_file = File.join(__dir__, 'data', 'labels.json')
+    LocalStorage.music_albums_file = File.join(__dir__, 'data', 'music_albums.json')
+    LocalStorage.genres_file = File.join(__dir__, 'data', 'genres.json')
   end
 
   def start
     LocalStorage.load_data(@app)
 
-    until exit_option?
-      print_menu
-      ask_option
-      evaluate_option
-      continue
+    until @selected_option == 7
+      @selected_option = Menu.print_menu
+      evaluate_main_menu_option
+      pause_execution
     end
   end
 
   private
 
-  def continue
-    puts 'Press enter to continue'
-    gets.chomp
-  end
-
-  def print_menu
-    system('cls') || system('clear')
-    puts "Catalog of my things\n\n"
-    puts '1  - List all books'
-    puts '2  - List all music albums'
-    puts '3  - List all movie'
-    puts '4  - List all games'
-    puts '5  - List all genres (e.g "Comedy", "Thriller")'
-    puts '6  - List all labels (e.g. "Gift", "New")'
-    puts '7  - List all authors (e.g. "Stephen King")'
-    puts '8  - List all sources (e.g. "From a friend", "Online shop")'
-    puts '9  - Add a book'
-    puts '10 - Add a music album'
-    puts '11 - Add a movie'
-    puts '12 - Add a game'
-    puts '13 - Remove a book'
-    puts '14 - Remove a music album'
-    puts '15 - Remove a movie'
-    puts '16 - Remove a game'
-    puts '18 - EXIT'
-  end
-
-  def ask_option
-    puts "\nPlease select an option"
-    @selected_option = gets.chomp.to_i
-    system('cls') || system('clear')
-    return if valid_option?
-
-    puts 'Invalid option, try again'
-    ask_option
-  end
-
-  def exit_option?
-    @selected_option == 18
-  end
-
-  def valid_option?
-    @selected_option.positive? && @selected_option <= 18
-  end
-
-  def evaluate_option
-    case @selected_option
-    when 1..4
-      list_items
-    when 5..8
-      list_atributes
-    when 9..12
-      add_item
-      puts "\nItem added successfully"
-    when 13..17
-      remove_item
-    when 18
-      LocalStorage.save_data(@app)
-      puts 'Bye!'
-    end
+  def evaluate_main_menu_option
+    list_items if @selected_option == 1
+    list_atributes if @selected_option == 2
+    add_item if @selected_option == 3
+    create_attribute if @selected_option == 4
+    add_attribute if @selected_option == 5
+    remove_item if @selected_option == 6
+    puts 'Bye bye!' if @selected_option == 7
   end
 
   def list_items
-    case @selected_option
-    when 1
-      @app.list_books
-    when 2
-      @app.list_music_albums
-    when 3
-      puts 'Come back soon'
-    when 4
-      @app.list_games
-    end
+    @selected_option = Menu.sub_menu1
+    @app.list_books if @selected_option == 1
+    @app.list_music_albums if @selected_option == 2
+    puts 'Come back soon' if @selected_option == 3
+    @app.list_games if @selected_option == 4
+    @selected_option = 7 if @selected_option == 5
   end
 
   def list_atributes
-    case @selected_option
-    when 5
-      puts @app.list_genres
-    when 6
-      puts @app.list_labels
-    when 7
-      puts @app.list_author
-    when 8
-      puts 'Come back soon'
-    end
+    @selected_option = Menu.sub_menu2
+    puts @app.list_genres if @selected_option == 1
+    puts @app.list_labels if @selected_option == 2
+    puts @app.list_author if @selected_option == 3
+    puts 'Come back soon' if @selected_option == 4
+    @selected_option = 7 if @selected_option == 5
   end
 
   def add_item
+    @selected_option = Menu.sub_menu3
+    add_book if @selected_option == 1
+    add_music_album if @selected_option == 2
+    puts 'Come back soon' if @selected_option == 3
+    add_game if @selected_option == 4
+    @selected_option = 7 if @selected_option == 5
+  end
+
+  def create_attribute
+    @selected_option = Menu.sub_menu4
     case @selected_option
-    when 9
-      add_book
-    when 10
-      add_music_album
-    when 11
+    when 2
+      label_title = get_input('Please enter the label title')
+      label_color = get_input('Please enter the label color')
+
+      @app.create_label(label_title, label_color)
+    when 1, 3..4
       puts 'Come back soon.'
-    when 12
-      add_game
+    when 5
+      puts 'Bye bye!'
+      @selected_option = 7
+    end
+  end
+
+  def add_attribute
+    @selected_option = Menu.sub_menu5
+    case @selected_option
+    when 1
+      add_book_attribute
+    when 2..4
+      puts 'Come back soon.'
+    when 5
+      puts 'Bye bye!'
+      @selected_option = 7
     end
   end
 
   def remove_item
+    @selected_option = Menu.sub_menu6
     case @selected_option
-    when 13
+    when 1
       remove_book
-    when 14
+    when 2..4
       puts 'Come back soon.'
-    when 15
-      puts 'Come back soon.'
+    when 5
+      puts 'Bye bye!'
+      @selected_option = 7
     end
   end
 
   def add_book
-    puts 'Please enter the publisher'
-    publisher = gets.chomp
-    puts 'Please enter the cover state'
-    cover_state = gets.chomp
-    puts 'Please enter the publish date'
-    publish_date = gets.chomp
+    publisher = get_input('Please enter the publisher')
+    cover_state = get_input('Please enter the cover state')
+    publish_date = get_input('Please enter the publish date')
     @app.add_book(publisher, cover_state, publish_date)
   end
 
   def add_music_album
-    puts 'Is the music album on spotify? (y/n)'
-    on_spotify = gets.chomp == 'y'
-    puts 'Please enter the publish date'
-    publish_date = gets.chomp
+    on_spotify = get_input('Is the music album on spotify? (y/n)') == 'y'
+    publish_date = get_input('Please enter the publish date')
     @app.add_music_album(on_spotify, publish_date)
   end
 
   def add_game
-    puts 'Is the game multiplayer? (y/n)'
-    multiplayer = gets.chomp == 'y'
-    puts 'Please enter the last played date'
-    last_played_at = gets.chomp
-    puts 'Please enter the publish date'
-    publish_date = gets.chomp
+    multiplayer = get_input('Is the game multiplayer? (y/n)') == 'y'
+    last_played_at = get_input('Please enter the last played date')
+    publish_date = get_input('Please enter the publish date')
     @app.add_game(publish_date, multiplayer, last_played_at)
+  end
+
+  def add_book_attribute
+    @app.list_books
+    book_id = get_input('Please enter the book id').to_i
+    puts @app.list_labels
+
+    label_id = get_input('Please enter the label id').to_i
+    @app.add_book_label(book_id, label_id)
+
+    puts 'Label added successfully'
   end
 
   def remove_book
     @app.list_books
-    puts 'Please enter the book id'
-    id = gets.chomp.to_i
+    id = get_input('Please enter the book id').to_i
     @app.remove_book(id)
     puts 'Book removed successfully'
+  end
+
+  def pause_execution
+    get_input('Press enter to continue')
+  end
+
+  def get_input(message)
+    puts message
+    gets.chomp
   end
 end
