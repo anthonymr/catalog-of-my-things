@@ -90,7 +90,7 @@ bundle install
 ### Usage
 To run the project, execute the following command:
 ``` sh
-ruby ruby bin/main.rb 
+ruby bin/main.rb 
 ```
 
 ## 👥 Authors <a name="authors"></a>
@@ -139,7 +139,7 @@ Feel free to check the [issues page](../../issues/).
 ## ⭐️ Show your support <a name="support"></a>
 
 
-if you like the project, give it a star ⭐️ 
+If you like the project, give it a star ⭐️ 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
