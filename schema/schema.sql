@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS genres (
 );
 
 CREATE TABLE IF NOT EXISTS authors (
-  id              SERIAL PRIMARY KEY
+  id              SERIAL PRIMARY KEY,
+  first_name      VARCHAR(50),
+  last_name       VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS sources (
@@ -66,6 +68,31 @@ CREATE TABLE IF NOT EXISTS books (
     REFERENCES labels(id)
 );
 
+CREATE TABLE IF NOT EXISTS games (
+	id              SERIAL PRIMARY KEY,
+	publish_date    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	archived        BOOLEAN NOT NULL DEFAULT FALSE,
+	multiplayer     BOOLEAN NOT NULL,
+	last_played     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  genre_id        INT,
+  author_id       INT,
+  source_id       INT,
+  label_id        INT,
+
+  CONSTRAINT fk_genre
+    FOREIGN KEY(genre_id)
+	  REFERENCES genres(id),
+  CONSTRAINT fk_author
+    FOREIGN KEY(author_id)
+    REFERENCES authors(id),
+  CONSTRAINT fk_source
+    FOREIGN KEY(source_id)
+    REFERENCES sources(id),
+  CONSTRAINT fk_label
+    FOREIGN KEY(label_id)
+    REFERENCES labels(id)
+);
+
 CREATE TABLE IF NOT EXISTS label_books (
   id              SERIAL PRIMARY KEY,
   label_id        INT NOT NULL,
@@ -90,4 +117,17 @@ CREATE TABLE IF NOT EXISTS genres_album (
   CONSTRAINT fk_music_albums
     FOREIGN KEY(music_albums_id) 
     REFERENCES music_albums(id)
+);
+
+CREATE TABLE IF NOT EXISTS authors_game (
+  id              SERIAL PRIMARY KEY,
+  author_id        INT NOT NULL,
+  game_id         INT NOT NULL,
+
+  CONSTRAINT fk_authors
+    FOREIGN KEY(author_id) 
+    REFERENCES authors(id),
+  CONSTRAINT fk_games
+    FOREIGN KEY(game_id) 
+    REFERENCES games(id)
 );

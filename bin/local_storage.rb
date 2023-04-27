@@ -18,25 +18,35 @@ class LocalStorage
       app.authors = load_from_file(authors_file).map { |author| Author.from_hash(author) }
       app.genres = load_from_file(genres_file).map { |genre| Genre.from_hash(genre) }
 
+      load_books(app)
+      load_music_albums(app)
+      load_games(app)
+    end
+
+    def load_books(app)
       load_from_file(books_file).map do |book|
         new_book = Book.from_hash(book)
         new_label = app.labels.find { |label| label.compare_to?(book['label_id']) }
         new_book.add_label(new_label) if new_label
         app.books << new_book
       end
+    end
 
-      load_from_file(games_file).map do |game|
-        new_game = Game.from_hash(game)
-        new_author = app.authors.find { |author| author.compare_to?(game['author_id']) }
-        new_game.add_author(new_author) if new_author
-        app.games << new_game
-      end
-
+    def load_music_albums(app)
       load_from_file(music_albums_file).map do |album|
         new_album = MusicAlbum.from_hash(album)
         new_genres = app.genres.find { |genre| genre.compare_to?(album['genre_id']) }
         new_album.add_genre(new_genres) if new_genres
         app.music_albums << new_album
+      end
+    end
+
+    def load_games(app)
+      load_from_file(games_file).map do |game|
+        new_game = Game.from_hash(game)
+        new_author = app.authors.find { |author| author.compare_to?(game['author_id']) }
+        new_game.add_author(new_author) if new_author
+        app.games << new_game
       end
     end
 
