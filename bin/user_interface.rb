@@ -12,6 +12,8 @@ class UserInterface
     LocalStorage.labels_file = File.join(root_dir, 'data', 'labels.json')
     LocalStorage.music_albums_file = File.join(root_dir, 'data', 'music_albums.json')
     LocalStorage.genres_file = File.join(root_dir, 'data', 'genres.json')
+    LocalStorage.games_file = File.join(root_dir, 'data', 'games.json')
+    LocalStorage.authors_file = File.join(root_dir, 'data', 'authors.json')
   end
 
   def start
