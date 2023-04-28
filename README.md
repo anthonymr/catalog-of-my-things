@@ -55,7 +55,7 @@
 
 
 ## 🚀 Project documentation <a name="live-demo"></a>
-### Take a look at project's video presentation [Link](https://drive.google.com/file/d/1RDPG64K92sydCbAGA-xS6smxZStPAaDy/view?usp=sharing)
+### Take a look at project's video presentation [Link](https://drive.google.com/file/d/1i_5scFMxo465JgFmNr0Q_FeGjjfV9JUw/view?usp=sharing)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
